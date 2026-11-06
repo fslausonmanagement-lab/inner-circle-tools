@@ -1,0 +1,191 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="robots" content="noindex"><style>:root{color-scheme:light}body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style><title>Request a Module</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=Figtree:wght@400;500;600;700&family=JetBrains+Mono:wght@500;700&display=swap">
+<style>
+/* Layout: one narrow column — request form, then a verdict panel (already covered / sent). Same tokens as Ask the Modules. */
+:root{
+  --bg:#f6f5fb; --panel:#ffffff; --ink:#17142b; --muted:#625d7d; --line:#e3e0f0;
+  --accent:#5b3df5; --accent-ink:#ffffff; --accent-soft:#ece8ff; --mark:#ffe58a; --mark-ink:#17142b;
+  --good:#12805c; --good-soft:#e2f5ec; --bad:#c2263d;
+  --display:"Bricolage Grotesque","Figtree",system-ui,sans-serif;
+  --body:"Figtree",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --mono:"JetBrains Mono",ui-monospace,Menlo,Consolas,monospace;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#100e1c; --panel:#1a1730; --ink:#eeecf8; --muted:#a29dc0; --line:#2d2948;
+  --accent:#8b74ff; --accent-ink:#100e1c; --accent-soft:#2a2350; --mark:#5c4a12; --mark-ink:#fff4cc;
+  --good:#4fd1a0; --good-soft:#123326; --bad:#ff7a8e; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#100e1c; --panel:#1a1730; --ink:#eeecf8; --muted:#a29dc0; --line:#2d2948;
+  --accent:#8b74ff; --accent-ink:#100e1c; --accent-soft:#2a2350; --mark:#5c4a12; --mark-ink:#fff4cc;
+  --good:#4fd1a0; --good-soft:#123326; --bad:#ff7a8e; color-scheme:dark}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:var(--body);font-size:15px;line-height:1.5}
+.wrap{max-width:720px;margin:0 auto;padding-block:28px 64px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+.eyebrow{font:700 11px/1 var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--accent)}
+h1{font:800 clamp(32px,6vw,48px)/1 var(--display);letter-spacing:-.02em;margin:8px 0 8px;text-wrap:balance}
+.lede{color:var(--muted);margin:0 0 20px;max-width:58ch}
+.steps{display:flex;flex-wrap:wrap;gap:6px 16px;margin:0 0 18px;padding:0;list-style:none;font:600 12.5px/1.3 var(--body);color:var(--muted)}
+.steps b{font:700 11px var(--mono);color:var(--accent);margin-right:5px}
+form{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:20px;display:grid;gap:14px}
+label{display:grid;gap:6px;font-weight:600;font-size:13.5px}
+label small{font-weight:400;color:var(--muted)}
+input,textarea{font:inherit;font-size:15px;color:var(--ink);background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:11px 12px;width:100%;min-width:0}
+textarea{min-height:90px;resize:vertical}
+input:focus-visible,textarea:focus-visible,button:focus-visible,a:focus-visible{outline:2px solid var(--accent);outline-offset:1px}
+.row{display:grid;grid-template-columns:1fr;gap:14px}
+button{font:700 15px/1 var(--body);border-radius:10px;border:0;padding:13px 18px;cursor:pointer}
+.primary{background:var(--accent);color:var(--accent-ink)}
+.primary:disabled{opacity:.55;cursor:progress}
+.link{background:none;color:var(--muted);padding:6px 0;font-weight:600;font-size:13.5px;text-decoration:underline;text-underline-offset:3px}
+.err{color:var(--bad);font-size:13px;font-weight:600;min-height:1em}
+#out{margin-top:18px}
+.panel{background:var(--panel);border:1.5px solid var(--accent);border-radius:14px;padding:18px 20px;display:grid;gap:12px}
+.panel.sent{border-color:var(--good);background:var(--good-soft)}
+.panel h2{font:800 22px/1.15 var(--display);margin:0;text-wrap:balance}
+.panel p{margin:0}
+.tag{font:700 10.5px/1 var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--accent)}
+.sent .tag{color:var(--good)}
+.list{display:grid;gap:10px}
+.item{border:1px solid var(--line);border-radius:12px;padding:12px 14px;display:grid;grid-template-columns:minmax(0,1fr) auto;gap:4px 14px;align-items:center;background:var(--bg)}
+.where{font:500 11.5px/1.3 var(--mono);color:var(--muted)}
+.title{font:700 15.5px/1.3 var(--body);margin:0}
+.sum{margin:0;font-size:14px;color:var(--muted)}
+.open{grid-row:1/4;grid-column:2;text-decoration:none;background:var(--accent);color:var(--accent-ink);font:700 13px/1 var(--body);padding:10px 12px;border-radius:9px;white-space:nowrap}
+@media (max-width:520px){.item{grid-template-columns:1fr}.open{grid-row:auto;grid-column:1;justify-self:start}}
+mark{background:var(--mark);color:var(--mark-ink);border-radius:3px;padding:0 1px}
+.override{border-top:1px dashed var(--line);padding-top:12px;display:grid;gap:8px}
+.override p{font-size:13.5px;color:var(--muted)}
+.note{font-size:12.5px;color:var(--muted);margin-top:22px}
+</style></head><body>
+
+<div class="wrap">
+  <div class="eyebrow">Inner Circle · Modules</div>
+  <h1>Request a Module</h1>
+  <p class="lede">Tell us what you want a lesson on. We'll check the modules first. If it's already covered, you'll go straight to it. If not, your request goes to the team.</p>
+  <ol class="steps"><li><b>1</b>Describe it</li><li><b>2</b>We check every lesson</li><li><b>3</b>Watch it, or we send your request</li></ol>
+
+  <form id="f" novalidate>
+    <label for="who">Your name or Whop username
+      <input id="who" name="who" autocomplete="name" placeholder="e.g. Jordan R." required>
+    </label>
+    <label for="topic">What do you want a module on?
+      <input id="topic" name="topic" placeholder="e.g. Setting up TikTok Shop for my store" required maxlength="120">
+    </label>
+    <label for="details">What should it cover? <small>optional</small>
+      <textarea id="details" name="details" placeholder="What are you stuck on? What would you want to walk away knowing?"></textarea>
+    </label>
+    <div><button class="primary" id="go" type="submit">Check &amp; send request</button></div>
+    <div class="err" id="err" role="alert"></div>
+  </form>
+
+  <div id="out" aria-live="polite"></div>
+
+  <p class="note" id="note"></p>
+</div>
+
+
+<script src="data.js"></script>
+<script src="forms.js"></script>
+<script>
+const DATA=window.DATA;
+const $=id=>document.getElementById(id);
+const esc=s=>String(s??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const norm=s=>String(s||'').toLowerCase().replace(/[“”"'’]/g,'').replace(/[^a-z0-9$%+ ]+/g,' ').replace(/\s+/g,' ').trim();
+const STOP=new Set('a an the to of for and or in on my i im is it how do does what when where why with your you me can should be get my at from this that are getting get not want dont cant why no any find need help module modules lesson lessons video videos about setting up using use make making doing do more learn learning better way ways good best'.split(' '));
+const SYN={
+ 'abandoned':['abandon','cart','checkout','klaviyo','klavio','email','sms'],'cart':['abandon','checkout','aov'],'checkout':['cart','abandon','payment'],
+ 'cpm':['paid','ads','fb','facebook','meta','cost'],'cpc':['paid','ads','click','fb','meta'],'ctr':['paid','ads','click','creative'],'roas':['paid','ads','scaling','profit'],
+ 'ads':['paid','fb','facebook','meta','adds'],'ad':['paid','fb','facebook','meta','adds'],'facebook':['fb','meta','ads'],'fb':['facebook','meta','ads'],'meta':['facebook','fb','ads'],
+ 'om':['organic','content','post','tiktok'],'organic':['om','content','post','tiktok','viral'],'tiktok':['organic','om','content','viral'],'views':['organic','om','viral','content','algorithm','alg'],
+ 'viral':['organic','om','trend','content'],'content':['organic','om','post','video','ugc'],'algorithm':['alg','organic','om'],
+ 'email':['klaviyo','klavio','sms','abandoned','nurture'],'sms':['email','klaviyo','klavio'],'klaviyo':['klavio','email','sms'],
+ 'product':['winning','niche','research'],'products':['winning','niche','research'],'winning':['product','criteria','research'],'niche':['niches','product'],
+ 'supplier':['zendrop','shipping','cj','fulfillment'],'shipping':['supplier','zendrop','rates'],'zendrop':['supplier','shipping'],
+ 'website':['store','shopify','site','landing'],'store':['website','shopify'],'site':['website','store'],'conversion':['website','store','reviews','trust','aov'],
+ 'aov':['order value','upsell','bundle','raising'],'upsell':['aov','bundle'],'reviews':['review','trust','testimon'],'trust':['reviews','about','faq','brand'],
+ 'logo':['brand','branding','font'],'brand':['branding','logo','personal brand'],'influencer':['influencers','ugc','creator','creators','outreach'],'ugc':['creator','influencer','ai ugc'],
+ 'scale':['scaling','meo'],'scaling':['scale','meo','budget'],'hire':['hiring','va','outsource'],'sell':['exit','selling'],
+ 'quit':['dont quit','mindset','discipline','consisten','motivation'],'motivation':['mindset','discipline','purpose','quit'],'discipline':['mindset','motivation','consisten'],
+ 'coach':['coaching','ryder','josh','questions'],'discord':['community','join'],'ai':['chat gpt','chatgpt','base44','base 44'],'chatgpt':['chat gpt','ai'],
+};
+const all=DATA.items.filter(i=>i.kind!=='pdf'||true);
+for(const i of all){i._t=norm(i.title);i._sum=norm(i.summary);i._p=norm(i.points.join(' '));i._s=i._sum+' '+i._p;i._tp=norm(i.topics.join(' '));}
+function hits(hay,w){const st=w.length>4?w.replace(/(ing|es|s)$/,''):w;const e=st.replace(/[$+]/g,'\\$&');return new RegExp('\\b'+e+(w.length<=4?'(s|es)?\\b':'')).test(hay);}
+function score(i,phrase,words){
+  let s=0;
+  if(phrase.length>3){if(i._t.includes(phrase))s+=14;if(i._s.includes(phrase))s+=8;}
+  for(const w of words){
+    let ws=0;
+    if(hits(i._t,w))ws+=6;if(hits(i._tp,w))ws+=3;if(hits(i._sum,w))ws+=4;else if(hits(i._p,w))ws+=1.5;
+    if(!ws)for(const v of SYN[w]||[]){const n=norm(v);if(hits(i._t,n))ws=Math.max(ws,3);else if(hits(i._s,n))ws=Math.max(ws,1.5);else if(hits(i._tp,n))ws=Math.max(ws,1);}
+    s+=ws;
+  }
+  return s;
+}
+// How much of the request one lesson covers: share of the request's key words found in that lesson's title or summary.
+// words that mean exactly the same thing in the lessons (count as a full match)
+const EQ={facebook:['fb','meta'],fb:['facebook','meta'],meta:['facebook','fb'],organic:['om'],om:['organic'],klaviyo:['klavio'],klavio:['klaviyo'],ads:['adds','ad'],ad:['ads','adds'],chatgpt:['chat gpt'],base44:['base 44']};
+function coverage(i,words){
+  if(!words.length)return 0;
+  const hay=i._t+' '+i._sum+' '+i._p;
+  // a direct hit counts fully; a synonym-only hit counts half, so synonyms alone can't make a match
+  return words.reduce((n,w)=>n+((hits(hay,w)||(EQ[w]||[]).some(v=>hits(hay,v)))?1:(SYN[w]||[]).some(v=>hits(i._t+' '+i._sum,norm(v)))?0.5:0),0)/words.length;
+}
+// "Already exists" = a lesson that matches most of what they asked for, with a strong title/summary hit.
+function findExisting(text){
+  const phrase=norm(text);
+  const words=[...new Set(phrase.split(' ').filter(w=>w&&!STOP.has(w)))];
+  if(!words.length)return {words,matches:[]};
+  const ranked=all.map(i=>({i,s:score(i,phrase,words),c:coverage(i,words)}))
+    .filter(x=>(x.s>=8||(x.c>=1&&x.s>=4))&&x.c>=(words.length<=2?1:0.6))
+    .sort((a,b)=>b.c-a.c||b.s-a.s);
+  return {words,matches:ranked.slice(0,3).map(x=>x.i)};
+}
+function hl(text,words){
+  let t=esc(text);const ws=words.filter(w=>w.length>2);if(!ws.length)return t;
+  return t.replace(new RegExp('\\b('+ws.map(w=>w.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')).join('|')+')','gi'),'<mark>$1</mark>');
+}
+async function send(fields){return sendForm('module-request',fields)}
+function showSent(topic,mode){
+  $('out').innerHTML=`<div class="panel sent"><span class="tag">Request sent</span><h2>Got it. Your request is in.</h2>
+    <p>“${esc(topic)}” isn't covered in the modules yet, so it's been sent to the team. Popular requests get made first.</p>
+    ${mode==='preview'?'<p class="sum">Preview mode: nothing was actually sent from this preview.</p>':''}</div>`;
+  $('f').reset();
+}
+let pending=null;
+$('f').addEventListener('submit',async e=>{
+  e.preventDefault();$('err').textContent='';
+  const who=$('who').value.trim(),topic=$('topic').value.trim(),details=$('details').value.trim();
+  if(!who){$('err').textContent='Add your name or Whop username so we know who asked.';$('who').focus();return;}
+  if(!topic){$('err').textContent='Write what you want a module on.';$('topic').focus();return;}
+  const {words,matches}=findExisting(topic);
+  if(matches.length){
+    pending={who,topic,details,matched:matches.map(m=>m.title).join(' | ')};
+    $('out').innerHTML=`<div class="panel"><span class="tag">Already covered</span><h2>Good news: this is already in the modules.</h2>
+      <p>Watch ${matches.length>1?'these':'this'} first. Your request wasn't sent.</p>
+      <div class="list">${matches.map(i=>`<article class="item"><div class="where">${esc(i.where)}${i.kind==='pdf'?' · PDF':''}</div>
+        <h3 class="title">${hl(i.title,words)}</h3>${i.summary?`<p class="sum">${hl(i.summary,words)}</p>`:''}
+        <a class="open" href="${esc(i.url)}" target="_blank" rel="noopener">${i.kind==='pdf'?'Open PDF':'Open lesson'} ↗</a></article>`).join('')}</div>
+      <div class="override"><p>Watched it and it doesn't cover what you need? Send your request anyway and tell the team what's missing in the box above.</p>
+        <div><button class="link" id="anyway" type="button">It doesn't cover it. Send my request</button></div></div></div>`;
+    $('anyway').onclick=async()=>{
+      const d=$('details').value.trim();
+      if(!d){$('err').textContent='Tell us what the existing lesson is missing in “What should it cover?”, then send.';$('details').focus();return;}
+      $('anyway').disabled=true;
+      try{showSent(pending.topic,await send({...pending,details:d,override:'yes'}));}
+      catch{$('err').textContent='Couldn\'t send right now. Try again in a minute.';$('anyway').disabled=false;}
+    };
+    $('out').scrollIntoView({behavior:'smooth',block:'start'});
+    return;
+  }
+  $('go').disabled=true;
+  try{showSent(topic,await send({who,topic,details,matched:'',override:'no'}));}
+  catch{$('err').textContent='Couldn\'t send right now. Try again in a minute.';}
+  finally{$('go').disabled=false;}
+});
+try{const t=new URLSearchParams(location.search).get('topic');if(t){$('topic').value=t.slice(0,120);$('who').focus();}}catch(e){}
+$('note').textContent=formLive()?'':'Preview: requests are checked against the real lesson list, but nothing is sent from this preview.';
+</script>
+</body></html>
