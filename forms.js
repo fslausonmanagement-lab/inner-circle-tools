@@ -1,6 +1,6 @@
 // Where the Store Review and Request a Module forms send their answers.
 // This is Finn's Google Apps Script web app: it emails Finn and saves each submission to a Google Sheet.
-window.FORM_URL = "";
+window.FORM_URL = "https://script.google.com/macros/s/AKfycbxVyKsTIA3Ruo-zRGxEqfa62cgB48SzUb71wk-RDvaqHZwzC2B1li98bLqfDrDgICZJ/exec";
 window.formLive = () => !!window.FORM_URL && /\.github\.io$/.test(location.hostname);
 window.sendForm = async (form, fields) => {
   if (!window.formLive()) { await new Promise(r => setTimeout(r, 500)); return "preview"; }
