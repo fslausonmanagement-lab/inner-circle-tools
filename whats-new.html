@@ -4,7 +4,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=Figtree:wght@400;500;600;700&family=JetBrains+Mono:wght@500;700&display=swap">
 <style>
-/* Layout: same tokens and type as Ask the Modules / Store Review / Request a Module. Hero, new videos, then a reminders band for the 4 tools students already have. */
+/* Layout: same tokens and type as Ask the Modules / Store Review / Request a Module. Hero, new videos, then a reminders band for the 3 tools students already have. */
 :root{--bg:#f6f5fb;--panel:#ffffff;--ink:#17142b;--muted:#625d7d;--line:#e3e0f0;--accent:#5b3df5;--accent-ink:#ffffff;--soft:#ece8ff;
 --video-bg:#e6efff;--video:#1d4fb8;--tool-bg:#e2f5ec;--tool:#12805c;
 --display:"Bricolage Grotesque","Figtree",system-ui,sans-serif;--body:"Figtree",system-ui,-apple-system,"Segoe UI",sans-serif;--mono:"JetBrains Mono",ui-monospace,Menlo,Consolas,monospace}
@@ -47,7 +47,7 @@ h2{font-family:var(--display);font-weight:800;font-size:clamp(28px,4vw,38px);mar
 .remind{background:var(--accent);color:var(--accent-ink);border-radius:20px;padding:28px 26px;margin-top:56px}
 .remind h2{margin:0 0 6px;color:var(--accent-ink)}
 .remind .sub{color:var(--accent-ink);opacity:.85}
-.rgrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.rgrid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
 .rcard{background:var(--panel);color:var(--ink);border-radius:14px;padding:18px 20px;display:flex;flex-direction:column;gap:6px;min-width:0}
 .rcard h3{margin:0;font-size:19px}
 .rcard p{margin:0;color:var(--muted);font-size:15.5px}
@@ -62,7 +62,7 @@ h2{font-family:var(--display);font-weight:800;font-size:clamp(28px,4vw,38px);mar
   <p class="eyebrow">Inner Circle · Nov 3 – Nov 9, 2026</p>
   <h1>What's new this week</h1>
   <p class="lede">A 2-part social media review, two mindset videos, how to find new product angles, and three videos on using Claude for your store, summaries and competitor ads.</p>
-  <div class="stats"><div><b>9</b><span>new videos</span></div><div><b>4</b><span>tool reminders</span></div></div>
+  <div class="stats"><div><b>9</b><span>new videos</span></div><div><b>3</b><span>tool reminders</span></div></div>
 </header>
 
 <h2>New videos</h2>
@@ -132,12 +132,6 @@ h2{font-family:var(--display);font-weight:800;font-size:clamp(28px,4vw,38px);mar
       <h3>Store Review</h3>
       <p>Send your store and what you want feedback on, and a coach will go through it and get back to you.</p>
       <a href="https://innercircle-hq.github.io/store-review.html" target="_blank" rel="noopener">Review my store →</a>
-    </article>
-    <article class="rcard">
-      <span class="when">Filming an ad or post?</span>
-      <h3>Hook Lab</h3>
-      <p>Write 25+ spoken and visual hooks in seconds from your product, buyer and niche. Test 3–5 on the same video and keep the winner.</p>
-      <a href="https://innercircle-hq.github.io/hook-lab.html" target="_blank" rel="noopener">Open Hook Lab →</a>
     </article>
   </div>
 </section>
